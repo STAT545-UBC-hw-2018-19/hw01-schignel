@@ -3,7 +3,9 @@ title: "Example Data Exploration
   Digging into the *gapminder* dataset"
 author: "Stephen Chignell"
 date: "September 18, 2018"
-output: html_document
+output:
+  html_document:
+    keep_md: true
 ---
 
 ```{r setup, include=FALSE}
