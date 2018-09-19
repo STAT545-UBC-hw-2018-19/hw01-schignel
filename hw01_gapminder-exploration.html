@@ -205,7 +205,7 @@ $(document).ready(function () {
 <p>Here we see that across the full range of time from 1952 to 2007, people in the wealthiest countries made 470.7 times as much money as the poorest.</p>
 <div id="plot-a-histogram" class="section level3">
 <h3>Plot a histogram</h3>
-<p>We can look at the distribution of wealth by using the “hist” function to plot a histogram. Notice that “xlab” is included to label the x axis.</p>
+<p>We can look at the distribution of wealth by using the “hist” function to plot a histogram. We can select a specific field from the dataset using the “$” symbol. Also Notice that “xlab” is included to label the x axis.</p>
 <pre class="r"><code>hist(gapminder$gdpPercap, 
      xlab = &quot;Gross Domestic Product per Capita&quot;,
      main = &quot;Histogram of Gross Domestic Product per Capita&quot;)</code></pre>
