@@ -60,7 +60,8 @@ Here we see that across the full range of time from 1952 to 2007, people in the 
 
 ### Plot a histogram
 We can look at the distribution of wealth by using the "hist" function to plot a histogram.
-Notice that "xlab" is included to label the x axis.
+We can select a specific field from the dataset using the "$" symbol. 
+Also Notice that "xlab" is included to label the x axis.
 ```{r}
 hist(gapminder$gdpPercap, 
      xlab = "Gross Domestic Product per Capita",
