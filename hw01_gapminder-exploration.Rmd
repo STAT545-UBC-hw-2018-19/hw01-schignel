@@ -15,10 +15,76 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Overview
 The following sections will demonstrate exploratory data analysis in R. We will start by familiziarizing ourselves with the *gapminder* dataset, and then produce a few plots to visualize interesting patterns in the data.
 
-### Step 1. Load the data
+
+### Load the dataset
 ```{r}
 library(gapminder)
 ```
+
+#### Explore its structure
+The "str" function provides detailed information on the type and composition of the dataset:
+```{r}
+str(gapminder)
+```
+We can see that the dataset has 6 fields (or "variables"), with 1704 entries (or "observations"). Some of these contain numerical data and others contain text data.
+
+
+#### Summarize the data
+The "summary" function provides basic descriptive statistics of each field:
+
+```{r}
+summary(gapminder)
+```
+Here we see that we are working with demographic information from a variety of countries ranging from the years 1952-2007. Already we can identify some interesting information. For example,
+
+- Life expectany ranges from 23.60 to 82.60 years
+- Population ranges from 60,010 to 1,319,000,000
+
+
+```{r}
+hist(gapminder$pop)
+```
+
+
+Let's find which countries and years these values are associated with. 
+
+```{r}
+head(gapminder)
+```
+
+
+### Plot the data
+Let's use the "plot" function in base R to see how population has changed over time.
+We can also provide basic labels with "ylab", "xlab", and "main".
+```{r}
+plot(gapminder$year,gapminder$pop, 
+     ylab = "Population (scientific notation", 
+     xlab ="Year",
+     main = "Population through time")
+```
+We see that population has been increasing, but there are two trends that are far steeper and greater than the rest of the data. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
