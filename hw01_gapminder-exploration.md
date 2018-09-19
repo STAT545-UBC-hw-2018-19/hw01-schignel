@@ -13,6 +13,7 @@ output:
 ## Overview
 The following sections will demonstrate exploratory data analysis in R. We will start by familiziarizing ourselves with the *gapminder* dataset, and then produce a few plots to visualize interesting patterns in the data.
 
+## Get familiar with the data
 
 ### Load the dataset
 
@@ -24,7 +25,7 @@ library(gapminder)
 ## Warning: package 'gapminder' was built under R version 3.5.1
 ```
 
-#### Explore its structure
+### Explore its structure
 The "str" function provides detailed information on the type and composition of the dataset:
 
 ```r
@@ -42,9 +43,29 @@ str(gapminder)
 ```
 We can see that the dataset has 6 fields (or "variables"), with 1704 entries (or "observations"). Some of these contain numerical data and others contain text data.
 
+### Look under the hood
+We can get a better sense of what we are working with by using the "head" function:
 
-#### Summarize the data
-The "summary" function provides basic descriptive statistics of each field:
+
+```r
+head(gapminder)
+```
+
+```
+## # A tibble: 6 x 6
+##   country     continent  year lifeExp      pop gdpPercap
+##   <fct>       <fct>     <int>   <dbl>    <int>     <dbl>
+## 1 Afghanistan Asia       1952    28.8  8425333      779.
+## 2 Afghanistan Asia       1957    30.3  9240934      821.
+## 3 Afghanistan Asia       1962    32.0 10267083      853.
+## 4 Afghanistan Asia       1967    34.0 11537966      836.
+## 5 Afghanistan Asia       1972    36.1 13079460      740.
+## 6 Afghanistan Asia       1977    38.4 14880372      786.
+```
+This shows the first 6 records in each of the fields, providing a "sneak peak" of the data without overwhelming us with the entire dataset.
+
+### Summarize the data
+Let's conduct a basic analysis of the gapminder dataset. The "summary" function provides a number of descriptive statistics for each field:
 
 
 ```r
@@ -69,103 +90,58 @@ summary(gapminder)
 ##  Max.   :1.319e+09   Max.   :113523.1  
 ## 
 ```
-Here we see that we are working with demographic information from a variety of countries ranging from the years 1952-2007. Already we can identify some interesting information. For example,
+Here we can clearly see that we are working with demographic information from a number of years and locations. Already we can identify some interesting information:
 
+- The temporal coverage of the dataset ranges from 1952 to 2007. 
 - Life expectany ranges from 23.60 to 82.60 years
 - Population ranges from 60,010 to 1,319,000,000
+- Gross Domestic Product per Capita (gdpPercap) ranges from 241.2 to 113523.1 (although we are unsure of the currency)
 
+## Explore GDP
 
-
-```r
-hist(gapminder$pop)
-```
-
-![](hw01_gapminder-exploration_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
-
-
-Let's find which countries and years these values are associated with. 
-
+Let's use the gapminder dataset to look at inequality. Using the information from the summary function above, we can divide the maximum GDP by the minimum GDP:
 
 ```r
-head(gapminder)
+113523.1/241.2
 ```
 
 ```
-## # A tibble: 6 x 6
-##   country     continent  year lifeExp      pop gdpPercap
-##   <fct>       <fct>     <int>   <dbl>    <int>     <dbl>
-## 1 Afghanistan Asia       1952    28.8  8425333      779.
-## 2 Afghanistan Asia       1957    30.3  9240934      821.
-## 3 Afghanistan Asia       1962    32.0 10267083      853.
-## 4 Afghanistan Asia       1967    34.0 11537966      836.
-## 5 Afghanistan Asia       1972    36.1 13079460      740.
-## 6 Afghanistan Asia       1977    38.4 14880372      786.
+## [1] 470.6596
 ```
+Here we see that across the full range of time from 1952 to 2007, people in the wealthiest countries made 470.7 times as much money as the poorest. 
 
-
-### Plot the data
-Let's use the "plot" function in base R to see how population has changed over time.
-We can also provide basic labels with "ylab", "xlab", and "main".
+### Plot a histogram
+We can look at the distribution of wealth by using the "hist" function to plot a histogram.
+Notice that "xlab" is included to label the x axis.
 
 ```r
-plot(gapminder$year,gapminder$pop, 
-     ylab = "Population (scientific notation", 
-     xlab ="Year",
-     main = "Population through time")
+hist(gapminder$gdpPercap, 
+     xlab = "Gross Domestic Product per Capita",
+     main = "Histogram of Gross Domestic Product per Capita")
 ```
 
 ![](hw01_gapminder-exploration_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
-We see that population has been increasing, but there are two trends that are far steeper and greater than the rest of the data. 
 
+The histogram shows a strong right skew, indicating that from 1957 to 2007, the vast majority of people made less than 20,000, while only a few made more than 40,000.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+### Plot GDP through time
+Let's use the "plot" function in base R to examine how GDP per capita has changed over time.
+Again, we can provide basic labels with "ylab", "xlab", and "main".
 
 
 ```r
-summary(cars)
+plot(gapminder$year,gapminder$gdpPercap, 
+     ylab = "GDP per capita", 
+     xlab ="Year",
+     main = "GDP per capita through time")
 ```
 
-```
-##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
-```
+![](hw01_gapminder-exploration_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
-## Including Plots
+Interestingly, the plot indicates that there are no extreme outliers after 1980, and that the range of GDP per capita has been increasingly fairly consistently since the late 1950s.
 
-You can also embed plots, for example:
 
-![](hw01_gapminder-exploration_files/figure-html/pressure-1.png)<!-- -->
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Conclusion
+
+The previous exercises show the value of simple data exploration in R. Through simple summary functions and generating simple plots, we are able to rapidly familiarize ourselves with the dataset and generate new questions to ask of it.
